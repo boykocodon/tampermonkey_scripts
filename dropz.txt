@@ -1,0 +1,124 @@
+// ==UserScript==
+// @name         dropz
+// @namespace    http://tampermonkey.net/
+// @version      2024-08-28
+// @description  try to take over the world!
+// @author       You
+// @match        https://my.dropz.xyz/member/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        GM_xmlhttpRequest
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Your code here...
+    setInterval(()=>{
+     auto();
+    },10000);
+
+    setInterval(()=>{
+     getCaptchaId();
+    },10000);
+
+    setInterval(()=>{
+     getCaptchaResponse();
+    },10000);
+
+    setInterval(()=>{
+     solveCaptcha();
+    },10000);
+
+})();
+
+var idCaptcha = '';
+function auto(){
+    console.log("auto");
+    var targetNode = document.querySelector("button[class='btn btn-info btn-sm mt-3 mb-4']");
+    if (targetNode) {
+        console.log(targetNode.innerText);
+        if(targetNode.innerText.trim() === 'Visit Website'){
+            console.log('click');
+            triggerMouseEvent (targetNode, "mouseover");
+            triggerMouseEvent (targetNode, "mousedown");
+            triggerMouseEvent (targetNode, "mouseup");
+            triggerMouseEvent (targetNode, "click");
+        }
+    }
+    else{
+        console.log ("*** Target node not found!");
+    }
+
+    return;
+    //setTimeout(auto(), 20000);
+}
+
+function getCaptchaId(){
+    var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
+    if (hcaptchaNode){
+        console.log('get captcha Id');
+         if(idCaptcha === ''){
+             console.log('send captcha id');
+             GM_xmlhttpRequest({
+                 method: "GET",
+                 url: "https://ocr.captchaai.com/in.php?key=85083ad522956ca65957407c945ed11d&method=hcaptcha&sitekey=5cb93c93-ed2d-4f52-bcbb-9a896cc6b071&pageurl=https://my.dropz.xyz/member/check-point?redirect=http%3A%2F%2Fmy.dropz.xyz%2Fmember%2Ftask%2Fsitefriends",
+                 headers: {
+                     "Content-Type": "application/json"
+                 },
+                 onload: function(response) {
+                      console.log('send captcha id response ' + response.responseText);
+                     var resText = response.responseText;
+                     if(resText.includes('OK|')){
+                         idCaptcha = resText.replace('OK|','');
+                     }
+                 }
+             });
+         }
+    }
+}
+
+
+var hCaptchaResponse = '';
+function getCaptchaResponse(){
+    console.log('id captcha = '+ idCaptcha);
+    if(idCaptcha !== ''){
+        console.log('get captcha response of id ' + idCaptcha);
+        GM_xmlhttpRequest({
+                 method: "GET",
+                 url: "https://ocr.captchaai.com/res.php?key=85083ad522956ca65957407c945ed11d&action=get&id=" + idCaptcha,
+                 headers: {
+                     "Content-Type": "application/json"
+                 },
+                 onload: function(response) {
+                      console.log('captcha response ' + response.responseText);
+                     var resText = response.responseText;
+                     if(resText === 'CAPCHA_NOT_READY'){
+                     }
+                     else if(resText.includes('OK|')){
+                         hCaptchaResponse = resText.replace('OK|','');
+                         idCaptcha = '';
+                     }else{
+                         idCaptcha = '';
+                     }
+                 }
+             });
+    }
+}
+
+function solveCaptcha(){
+     var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
+    if (hcaptchaNode){
+        console.log('solve captcha');
+        if(hCaptchaResponse !== ''){
+            document.querySelector("textarea[name='h-captcha-response']").value = hCaptchaResponse;
+            document.querySelector("textarea[name='g-recaptcha-response']").value = hCaptchaResponse;
+            hCaptchaResponse = '';
+            document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
+        }
+    }
+}
+function triggerMouseEvent (node, eventType) {
+        var clickEvent = new Event(eventType, { bubbles: true, cancelable: true });
+        node.dispatchEvent (clickEvent);
+}
+
