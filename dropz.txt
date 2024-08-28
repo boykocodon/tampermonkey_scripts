@@ -28,6 +28,10 @@
     setInterval(()=>{
      solveCaptcha();
     },10000);
+	
+	setInterval(()=>{
+     clickOther();
+    },10000);
 
 })();
 
@@ -115,6 +119,19 @@ function solveCaptcha(){
             hCaptchaResponse = '';
             document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
         }
+    }
+}
+
+function clickOther(){
+	var targetNode = document.querySelector("button[class='swal-button swal-button--confirm']");
+    if (targetNode) {
+            triggerMouseEvent (targetNode, "mouseover");
+            triggerMouseEvent (targetNode, "mousedown");
+            triggerMouseEvent (targetNode, "mouseup");
+            triggerMouseEvent (targetNode, "click");
+    }
+    else{
+        
     }
 }
 function triggerMouseEvent (node, eventType) {
