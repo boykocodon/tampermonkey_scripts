@@ -71,7 +71,7 @@ function getCaptchaId(){
 			 if(profile !== '')
 				 GM_xmlhttpRequest({
 					 method: "GET",
-					 //url: "https://ocr.captchaai.com/in.php?key=85083ad522956ca65957407c945ed11d&method=hcaptcha&sitekey=5cb93c93-ed2d-4f52-bcbb-9a896cc6b071&pageurl=https://my.dropz.xyz/member/check-point?redirect=http%3A%2F%2Fmy.dropz.xyz%2Fmember%2Ftask%2Fsitefriends",
+					
 					 url:'http://localhost:8090/Captcha?profile=' + profile,
 					 headers: {
 						 "Content-Type": "application/json"
@@ -79,10 +79,7 @@ function getCaptchaId(){
 					 onload: function(response) {
 						  console.log('send captcha id response ' + response.responseText);
 						 var resText = response.responseText;
-						 if(resText.includes('OK|')){
-							 idCaptcha = resText.replace('OK|','');
-						 }
-						 else 
+						 
 							idCaptcha = resText;
 					 }
 				 });
@@ -101,7 +98,7 @@ function getCaptchaResponse(){
         console.log('get captcha response of id ' + idCaptcha);
         GM_xmlhttpRequest({
                  method: "GET",
-                 //url: "https://ocr.captchaai.com/res.php?key=85083ad522956ca65957407c945ed11d&action=get&id=" + idCaptcha,
+                
 				 url:'http://localhost:8090/Response?captchaTask=' + idCaptcha,
                  headers: {
                      "Content-Type": "application/json"
@@ -111,12 +108,9 @@ function getCaptchaResponse(){
                      var resText = response.responseText;
                      if(resText === 'CAPTCHA_NOT_READY'){
                      }
-                     else if(resText.includes('OK|')){
-                         hCaptchaResponse = resText.replace('OK|','');
-                         idCaptcha = '';
-                     }else{
+                     else{
 						hCaptchaResponse = resText;
-                         idCaptcha = '';
+                        
                      }
                  }
              });
@@ -133,10 +127,9 @@ function solveCaptcha(){
         if(hCaptchaResponse !== ''){
             document.querySelector("textarea[name='h-captcha-response']").value = hCaptchaResponse;
             document.querySelector("textarea[name='g-recaptcha-response']").value = hCaptchaResponse;
-            hCaptchaResponse = '';
-			idCaptcha = '';
+ clickSolved = true;
             document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
-			clickSolved = true;
+			
         }
     }
 }
@@ -152,13 +145,7 @@ function clickOther(){
     else{
         
     }
-	try{
-	var profile1 = document.getElementsByTagName('h4')[1].innerText;
-	if(profile === '' && profile1 !== ''){
-		profile = profile1;
-	}
-	}catch(exxx)
-	{}
+
 	console.log(' profile ', profile);
 }
 function triggerMouseEvent (node, eventType) {
