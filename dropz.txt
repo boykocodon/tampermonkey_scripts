@@ -116,8 +116,11 @@ function getCaptchaResponse(){
              });
     }
 }
-
+var clickSolved = false;
 function solveCaptcha(){
+	if(clickSolved){
+		return;
+	}
      var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
     if (hcaptchaNode){
         console.log('solve captcha');
@@ -127,6 +130,7 @@ function solveCaptcha(){
             hCaptchaResponse = '';
 			idCaptcha = '';
             document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
+			clickSolved = true;
         }
     }
 }
