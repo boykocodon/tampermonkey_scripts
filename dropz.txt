@@ -58,6 +58,9 @@ function auto(){
 }
 var profile = '';
 function getCaptchaId(){
+	if(clickSolved){
+		return;
+	}
     var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
     if (hcaptchaNode){
         console.log('get captcha Id');
@@ -90,6 +93,9 @@ function getCaptchaId(){
 
 var hCaptchaResponse = '';
 function getCaptchaResponse(){
+	if(clickSolved){
+		return;
+	}
     console.log('id captcha = '+ idCaptcha);
     if(idCaptcha !== ''){
         console.log('get captcha response of id ' + idCaptcha);
