@@ -15,23 +15,23 @@
     // Your code here...
     setInterval(()=>{
      auto();
-    },10000);
+    },5000);
 
     setInterval(()=>{
      getCaptchaId();
-    },10000);
+    },5000);
 
     setInterval(()=>{
      getCaptchaResponse();
-    },10000);
+    },5000);
 
     setInterval(()=>{
      solveCaptcha();
-    },10000);
-	
+    },5000);
+
 	setInterval(()=>{
      clickOther();
-    },10000);
+    },5000);
 
 })();
 
@@ -41,12 +41,11 @@ function auto(){
     var targetNode = document.querySelector("button[class='btn btn-info btn-sm mt-3 mb-4']");
     if (targetNode) {
         console.log(targetNode.innerText);
+
         if(targetNode.innerText.trim() === 'Visit Website'){
             console.log('click');
-            triggerMouseEvent (targetNode, "mouseover");
-            triggerMouseEvent (targetNode, "mousedown");
-            triggerMouseEvent (targetNode, "mouseup");
-            triggerMouseEvent (targetNode, "click");
+             clickButton("button[class='btn btn-info btn-sm mt-3 mb-4']");
+           
         }
     }
     else{
@@ -56,9 +55,9 @@ function auto(){
     return;
     //setTimeout(auto(), 20000);
 }
-var profile = '';
+
 function getCaptchaId(){
-	if(clickSolved){
+    if(clickSolved){
 		return;
 	}
     var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
@@ -66,12 +65,11 @@ function getCaptchaId(){
         console.log('get captcha Id');
          if(idCaptcha === ''){
              console.log('send captcha id');
-			 //var profile = document.getElementsByTagName('h4')[1].innerText;
-			 var profile = 'DOCBAO';
+			 profile = 'PROFILE';
 			 if(profile !== '')
 				 GM_xmlhttpRequest({
 					 method: "GET",
-					
+					 //url: "https://ocr.captchaai.com/in.php?key=85083ad522956ca65957407c945ed11d&method=hcaptcha&sitekey=5cb93c93-ed2d-4f52-bcbb-9a896cc6b071&pageurl=https://my.dropz.xyz/member/check-point?redirect=http%3A%2F%2Fmy.dropz.xyz%2Fmember%2Ftask%2Fsitefriends",
 					 url:'http://localhost:8090/Captcha?profile=' + profile,
 					 headers: {
 						 "Content-Type": "application/json"
@@ -79,7 +77,7 @@ function getCaptchaId(){
 					 onload: function(response) {
 						  console.log('send captcha id response ' + response.responseText);
 						 var resText = response.responseText;
-						 
+						
 							idCaptcha = resText;
 					 }
 				 });
@@ -90,7 +88,7 @@ function getCaptchaId(){
 
 var hCaptchaResponse = '';
 function getCaptchaResponse(){
-	if(clickSolved){
+    if(clickSolved){
 		return;
 	}
     console.log('id captcha = '+ idCaptcha);
@@ -98,7 +96,7 @@ function getCaptchaResponse(){
         console.log('get captcha response of id ' + idCaptcha);
         GM_xmlhttpRequest({
                  method: "GET",
-                
+                 //url: "https://ocr.captchaai.com/res.php?key=85083ad522956ca65957407c945ed11d&action=get&id=" + idCaptcha,
 				 url:'http://localhost:8090/Response?captchaTask=' + idCaptcha,
                  headers: {
                      "Content-Type": "application/json"
@@ -108,17 +106,19 @@ function getCaptchaResponse(){
                      var resText = response.responseText;
                      if(resText === 'CAPTCHA_NOT_READY'){
                      }
-                     else{
+                    else{
 						hCaptchaResponse = resText;
-                        
+
+                         
                      }
                  }
              });
     }
 }
+
 var clickSolved = false;
 function solveCaptcha(){
-	if(clickSolved){
+    if(clickSolved){
 		return;
 	}
      var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
@@ -127,15 +127,22 @@ function solveCaptcha(){
         if(hCaptchaResponse !== ''){
             document.querySelector("textarea[name='h-captcha-response']").value = hCaptchaResponse;
             document.querySelector("textarea[name='g-recaptcha-response']").value = hCaptchaResponse;
- clickSolved = true;
+        
+            clickSolved = true;
             document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
-			
+     
         }
     }
 }
 
 function clickOther(){
-	var targetNode = document.querySelector("button[class='swal-button swal-button--confirm']");
+    clickButton("button[class='swal-button swal-button--confirm']");
+    //clickButton("div[id='dismiss-button']");
+    document.querySelector("div[id='dismiss-button']").click();
+	
+}
+function clickButton(xpath){
+     var targetNode = document.querySelector(xpath);
     if (targetNode) {
             triggerMouseEvent (targetNode, "mouseover");
             triggerMouseEvent (targetNode, "mousedown");
@@ -143,11 +150,10 @@ function clickOther(){
             triggerMouseEvent (targetNode, "click");
     }
     else{
-        
-    }
 
-	console.log(' profile ', profile);
+    }
 }
+
 function triggerMouseEvent (node, eventType) {
         var clickEvent = new Event(eventType, { bubbles: true, cancelable: true });
         node.dispatchEvent (clickEvent);
