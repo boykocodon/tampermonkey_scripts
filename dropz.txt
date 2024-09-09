@@ -5,6 +5,7 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://my.dropz.xyz/member/*
+// @match        https://googleads.g.doubleclick.net/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
@@ -45,7 +46,7 @@ function auto(){
         if(targetNode.innerText.trim() === 'Visit Website'){
             console.log('click');
              clickButton("button[class='btn btn-info btn-sm mt-3 mb-4']");
-           
+
         }
     }
     else{
@@ -77,7 +78,7 @@ function getCaptchaId(){
 					 onload: function(response) {
 						  console.log('send captcha id response ' + response.responseText);
 						 var resText = response.responseText;
-						
+
 							idCaptcha = resText;
 					 }
 				 });
@@ -109,7 +110,7 @@ function getCaptchaResponse(){
                     else{
 						hCaptchaResponse = resText;
 
-                         
+
                      }
                  }
              });
@@ -125,21 +126,23 @@ function solveCaptcha(){
     if (hcaptchaNode){
         console.log('solve captcha');
         if(hCaptchaResponse !== ''){
+			document.querySelector("textarea[name='h-captcha-response']").style.display='block';
+			document.querySelector("textarea[name='g-recaptcha-response']").style.display='block';
             document.querySelector("textarea[name='h-captcha-response']").value = hCaptchaResponse;
             document.querySelector("textarea[name='g-recaptcha-response']").value = hCaptchaResponse;
-        
+
             clickSolved = true;
             document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
-     
+
         }
     }
 }
 
 function clickOther(){
     clickButton("button[class='swal-button swal-button--confirm']");
-    //clickButton("div[id='dismiss-button']");
-    document.querySelector("div[id='dismiss-button']").click();
-	
+    clickButton("div[id='dismiss-button']");
+    //document.querySelector("div[id='dismiss-button']").click();
+
 }
 function clickButton(xpath){
      var targetNode = document.querySelector(xpath);
