@@ -13,9 +13,9 @@ namespace WebApplication2.Models
         public string Profile { get; set; }
 
         public bool IsSuccess { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         [Column(TypeName = "text")]
         public string Base64 { get; set; }
-        public string Response { get; set; }
+        public string? Response { get; set; }
     }
 }
