@@ -49,7 +49,13 @@ var idCaptcha = '';
     }
      if(base64 != ''){
          var ret =   Tesseract.recognize(base64,'eng');
-         ret.then(function(data){ console.log(data.data.text);});
+         ret.then(function(data){
+         var text =  data.data.text.replace('0','O');
+             var ele = document.querySelector('input[type=text]');
+             ele.value = text;
+             ele.dispatchEvent(new Event('input'));
+             document.querySelector('input[type=submit]').click();
+         });
      }
 
     //.then(({ data: { text } })=>{console.log("Text from teseract:", text);});
