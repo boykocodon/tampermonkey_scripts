@@ -8,12 +8,17 @@
 // @match        https://googleads.g.doubleclick.net/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
+// @require      https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js
 // ==/UserScript==
 
-(function() {
+( function() {
     'use strict';
-
+    setInterval(()=>{
+     autoCaptcha();
+    },5000);
     // Your code here...
+    
+/*
     setInterval(()=>{
      auto();
     },5000);
@@ -32,12 +37,23 @@
 
 	setInterval(()=>{
      clickOther();
-    },5000);
+    },5000);*/
 
 })();
-
 var idCaptcha = '';
-var profile = 'PROFILE';
+ function autoCaptcha(){
+    console.log("auto captcha");
+    var base64 = '';
+    if(document.querySelector('form img')){
+        base64 = document.querySelector('form img').src;
+    }
+     if(base64 != ''){
+         var ret =   Tesseract.recognize(base64,'eng');
+         ret.then(function(data){ console.log(data.data.text);});
+     }
+
+    //.then(({ data: { text } })=>{console.log("Text from teseract:", text);});
+}
 function auto(){
     console.log("auto");
     var targetNode = document.querySelector("button[class='btn btn-info btn-sm mt-3 mb-4']");
@@ -53,37 +69,10 @@ function auto(){
     else{
         console.log ("*** Target node not found!");
     }
-	
+
+    return;
+    //setTimeout(auto(), 20000);
 }
-
-
-function getDropzCaptchaId(){
-    if(clickSolved){
-		return;
-	}
-    var base64Dropz = document.querySelector("img").src;
-    if (base64Dropz){
-        console.log('get captcha Id ' + base64Dropz);
-         if(idCaptcha === ''){
-             console.log('send captcha id');
-			 if(profile !== '')
-				 GM_xmlhttpRequest({
-					 method: "GET",
-					 url:'http://localhost:8090/Captcha?profile=' + profile,
-					 headers: {
-						 "Content-Type": "application/json"
-					 },
-					 onload: function(response) {
-						  console.log('send captcha id response ' + response.responseText);
-						 var resText = response.responseText;
-
-							idCaptcha = resText;
-					 }
-				 });
-         }
-    }
-}
-
 
 function getCaptchaId(){
     if(clickSolved){
@@ -94,9 +83,11 @@ function getCaptchaId(){
         console.log('get captcha Id');
          if(idCaptcha === ''){
              console.log('send captcha id');
+			 profile = 'PROFILE';
 			 if(profile !== '')
 				 GM_xmlhttpRequest({
 					 method: "GET",
+					 //url: "https://ocr.captchaai.com/in.php?key=85083ad522956ca65957407c945ed11d&method=hcaptcha&sitekey=5cb93c93-ed2d-4f52-bcbb-9a896cc6b071&pageurl=https://my.dropz.xyz/member/check-point?redirect=http%3A%2F%2Fmy.dropz.xyz%2Fmember%2Ftask%2Fsitefriends",
 					 url:'http://localhost:8090/Captcha?profile=' + profile,
 					 headers: {
 						 "Content-Type": "application/json"
@@ -123,6 +114,7 @@ function getCaptchaResponse(){
         console.log('get captcha response of id ' + idCaptcha);
         GM_xmlhttpRequest({
                  method: "GET",
+                 //url: "https://ocr.captchaai.com/res.php?key=85083ad522956ca65957407c945ed11d&action=get&id=" + idCaptcha,
 				 url:'http://localhost:8090/Response?captchaTask=' + idCaptcha,
                  headers: {
                      "Content-Type": "application/json"
@@ -168,17 +160,14 @@ function solveCaptcha(){
 function clickOther(){
     clickButton("button[class='swal-button swal-button--confirm']");
     clickButton("div[id='dismiss-button']");
-     
+    
 
 }
 function clickButton(xpath){
      var targetNode = document.querySelector(xpath);
     if (targetNode) {
-			targetNode.click();
-            /*triggerMouseEvent (targetNode, "mouseover");
-            triggerMouseEvent (targetNode, "mousedown");
-            triggerMouseEvent (targetNode, "mouseup");
-            triggerMouseEvent (targetNode, "click");*/
+        targetNode.click();
+           
     }
     else{
 
