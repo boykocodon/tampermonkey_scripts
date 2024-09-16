@@ -18,15 +18,19 @@ namespace WebApplication2.Controllers
         public async Task<string> GetDropzCaptcha(int id)
         {
             var existTask = _dbContext.DropzCaptchas.FirstOrDefault(p => p.Id == id);
-            if (existTask != null)
+            if (existTask == null)
             {
-                return string.Empty;
+                return "CAPTCHA_NOT_READY";
             }
             if (existTask.IsSuccess && existTask.IsCompleted)
             {
+                if (string.IsNullOrEmpty(existTask.Response))
+                {
+                    return "CAPTCHA_NOT_READY";
+                }
                 return existTask.Response;
             }
-            return string.Empty;
+            return "CAPTCHA_NOT_READY";
         }
     }
 }
