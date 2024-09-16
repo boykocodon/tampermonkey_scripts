@@ -13,5 +13,6 @@ namespace WebApplication2
         public DbSet<CaptchaTask> CaptchaTasks { get; set; } = null!;
 
         public DbSet<HCaptchaSolveByCaptchaAI> HCaptchaSolveByCaptchaAIs { get; set; } = null!;
+        public DbSet<DropzCaptcha> DropzCaptchas { get; set; } = null!;
     }
 }

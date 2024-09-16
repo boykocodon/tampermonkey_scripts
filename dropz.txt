@@ -46,7 +46,7 @@ function auto(){
         if(targetNode.innerText.trim() === 'Visit Website'){
             console.log('click');
              clickButton("button[class='btn btn-info btn-sm mt-3 mb-4']");
-
+			targetNode.scrollIntoView();
         }
     }
     else{
@@ -118,8 +118,9 @@ function getCaptchaResponse(){
 }
 
 var clickSolved = false;
+var clickSolveTime = 0;
 function solveCaptcha(){
-    if(clickSolved){
+    if(clickSolved && clickSolveTime > 2){
 		return;
 	}
      var hcaptchaNode = document.querySelector("textarea[name='h-captcha-response']");
@@ -132,8 +133,9 @@ function solveCaptcha(){
             document.querySelector("textarea[name='g-recaptcha-response']").value = hCaptchaResponse;
 
             clickSolved = true;
-            document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
-
+			clickSolveTime++;
+            //document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
+			clickButton("button[class='btn btn-block btn-danger text-light auth-form-btn']");
         }
     }
 }
@@ -141,16 +143,17 @@ function solveCaptcha(){
 function clickOther(){
     clickButton("button[class='swal-button swal-button--confirm']");
     clickButton("div[id='dismiss-button']");
-    //document.querySelector("div[id='dismiss-button']").click();
+     
 
 }
 function clickButton(xpath){
      var targetNode = document.querySelector(xpath);
     if (targetNode) {
-            triggerMouseEvent (targetNode, "mouseover");
+			targetNode.click();
+            /*triggerMouseEvent (targetNode, "mouseover");
             triggerMouseEvent (targetNode, "mousedown");
             triggerMouseEvent (targetNode, "mouseup");
-            triggerMouseEvent (targetNode, "click");
+            triggerMouseEvent (targetNode, "click");*/
     }
     else{
 
