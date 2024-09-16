@@ -8,12 +8,17 @@
 // @match        https://googleads.g.doubleclick.net/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
+// @require      https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js
 // ==/UserScript==
 
-(function() {
+( function() {
     'use strict';
-
+    setInterval(()=>{
+     autoCaptcha();
+    },5000);
     // Your code here...
+    
+/*
     setInterval(()=>{
      auto();
     },5000);
@@ -32,11 +37,29 @@
 
 	setInterval(()=>{
      clickOther();
-    },5000);
+    },5000);*/
 
 })();
-
 var idCaptcha = '';
+ function autoCaptcha(){
+    console.log("auto captcha");
+    var base64 = '';
+    if(document.querySelector('form img')){
+        base64 = document.querySelector('form img').src;
+    }
+     if(base64 != ''){
+         var ret =   Tesseract.recognize(base64,'eng');
+         ret.then(function(data){
+         var text =  data.data.text.replace('0','O');
+             var ele = document.querySelector('input[type=text]');
+             ele.value = text;
+             ele.dispatchEvent(new Event('input'));
+             document.querySelector('input[type=submit]').click();
+         });
+     }
+
+    //.then(({ data: { text } })=>{console.log("Text from teseract:", text);});
+}
 function auto(){
     console.log("auto");
     var targetNode = document.querySelector("button[class='btn btn-info btn-sm mt-3 mb-4']");
@@ -143,17 +166,14 @@ function solveCaptcha(){
 function clickOther(){
     clickButton("button[class='swal-button swal-button--confirm']");
     clickButton("div[id='dismiss-button']");
-     
+    
 
 }
 function clickButton(xpath){
      var targetNode = document.querySelector(xpath);
     if (targetNode) {
-			targetNode.click();
-            /*triggerMouseEvent (targetNode, "mouseover");
-            triggerMouseEvent (targetNode, "mousedown");
-            triggerMouseEvent (targetNode, "mouseup");
-            triggerMouseEvent (targetNode, "click");*/
+        targetNode.click();
+           
     }
     else{
 
