@@ -26,27 +26,20 @@ function auto(){
 
         if(targetNode.innerText.trim() === 'Visit Website'){
             console.log('click');
-             clickButton("button[class='btn btn-info btn-sm mt-3 mb-4']");
-			targetNode.scrollIntoView();
+             clickButton(targetNode);
         }
     }
     else{
         console.log ("*** Target node not found!");
     }
-}
-
-function clickButton(xpath){
-     var targetNode = document.querySelector(xpath);
-    if (targetNode) {
-        targetNode.click();
-    }
-    else{
-
+    var p2 = document.querySelector("p[class='mt-2 card-text']");
+    if(p2){
+        p2.scrollIntoView();
     }
 }
 
-function triggerMouseEvent (node, eventType) {
-        var clickEvent = new Event(eventType, { bubbles: true, cancelable: true });
-        node.dispatchEvent (clickEvent);
+function clickButton(targetNode){
+   
+    targetNode.click();
+   
 }
-

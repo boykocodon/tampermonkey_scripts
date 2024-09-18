@@ -1,0 +1,186 @@
+// ==UserScript==
+// @name         dropz captcha tesseractjs
+// @namespace    http://tampermonkey.net/
+// @version      2024-08-28
+// @description  try to take over the world!
+// @author       You
+// @match        https://my.dropz.xyz/member/task/captc*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        GM_xmlhttpRequest
+// @require      https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js
+// ==/UserScript==
+
+( function() {
+    'use strict';
+
+    // Your code here...
+     setInterval(()=>{
+      autoCaptcha();
+     },5000);
+
+})();
+
+
+function DetectImage(str, callback){
+    const Predict = {
+        '4':'00000110000011100001111000110110011001101100011011111111000001100000011000000110',
+        'V':'11000011110000111100001101100110011001100110011000111100001111000001100000011000',
+        'E':'11111110110000001100000011000000111111001100000011000000110000001100000011111110',
+        '9':'00111100011001101100001111000011011001110011101100000011010000110110011000111100',
+        'A':'00011000001111000110011011000011110000111100001111111111110000111100001111000011',
+        '1':'00011000001110000111100000011000000110000001100000011000000110000001100001111110',
+        'S':'01111110110000111100000011000000011111100000001100000011000000111100001101111110',
+        'O':'00111100011001101100001111000011110000111100001111000011110000110110011000111100',
+        'J':'00011110000001100000011000000110000001100000011000000110010001100110110000111000',
+        '5':'11111110110000001100000011011100111001100000001100000011110000110110011000111100',
+        'H':'11000011110000111100001111000011111111111100001111000011110000111100001111000011',
+        'F':'11111111110000001100000011000000111111001100000011000000110000001100000011000000',
+        '7':'11111111000000110000001100000110000011000001100000110000011000001100000011000000',
+        'K':'11000011110001101100110011011000111100001111000011011000110011001100011011000011',
+        'M':'11000011111001111111111111011011110110111101101111000011110000111100001111000011',
+        'P':'11111110110000111100001111000011111111101100000011000000110000001100000011000000',
+        'Z':'11111110000001100000011000001100000110000011000001100000110000001100000011111110',
+        'T':'11111111000110000001100000011000000110000001100000011000000110000001100000011000',
+        'D':'11111100110001101100001111000011110000111100001111000011110000111100011011111100',
+        'Y':'11000011110000110110011000111100000110000001100000011000000110000001100000011000',
+        'W':'11000011110000111100001111000011110110111101101111011011111111111110011111000011',
+        '3':'01111100110001100000001100000110000111000000011000000011000000111100011001111100',
+        '6':'00111100011001101100001011000000110111001110011011000011110000110110011000111100',
+        'B':'11111100110001101100001111000110111111001100011011000011110000111100011011111100',
+        '8':'00111100011001101100001101100110001111000110011011000011110000110110011000111100',
+        'R':'11111110110000111100001111000011111111101111100011001100110001101100001111000011',
+        'X':'11000011110000110110011000111100000110000001100000111100011001101100001111000011',
+        'G':'00111110011000111100000011000000110000001100011111000011110000110110001100111110',
+        '2':'00111100011001101100001100000011000001100000110000011000001100000110000011111111',
+        'N':'11000011111000111111001111110011110110111101101111001111110001111100011111000011',
+        'C':'00111110011000111100000111000000110000001100000011000000110000010110001100111110',
+        'Q':'00111100011001101100001111000011110000111100001111011011110011110110011000111101',
+        'L':'11000000110000001100000011000000110000001100000011000000110000001100000011111110'
+    }
+    for (const key in Predict) {
+        if(Predict[key] == str){
+            callback(key);
+            //return key;
+        }
+    }
+    callback('');
+    //return '';
+}
+function cropBase64Image(base64Image, cropX, cropY, cropWidth, cropHeight, callback) {
+    // Create an Image object
+    const img = new Image();
+    img.src = base64Image;
+
+    img.onload = function() {
+        // Create a canvas to draw the original image
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Draw the original image
+        ctx.drawImage(img, 0, 0);
+
+        // Create a new canvas for the cropped image
+        const croppedCanvas = document.createElement('canvas');
+        const croppedCtx = croppedCanvas.getContext('2d');
+        croppedCanvas.width = cropWidth;
+        croppedCanvas.height = cropHeight;
+
+        // Draw the cropped area onto the new canvas
+        croppedCtx.drawImage(
+            canvas,
+            cropX, cropY, cropWidth, cropHeight,
+            0, 0, cropWidth, cropHeight
+        );
+
+        // Convert the cropped canvas to a base64 string
+        const croppedBase64 = croppedCanvas.toDataURL();
+
+        // Call the callback function with the new base64 image
+        callback(croppedBase64);
+    };
+
+    img.onerror = function() {
+        console.error('Failed to load image.');
+    };
+}
+
+
+function base64ToBitmap(base64Image, callback) {
+    // Create an Image object
+    const img = new Image();
+    img.src = base64Image;
+
+    img.onload = function() {
+        // Create a canvas to draw the image
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Get image data from the canvas
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        // Extract pixel data
+        const data = imageData.data;
+
+        // Create a 2D array to hold pixel data
+        var pixels = '';
+        for (let y = 0; y < canvas.height; y++) {
+            const row = [];
+            for (let x = 0; x < canvas.width; x++) {
+                const index = (y * canvas.width + x) * 4;
+                if(data[index]!=0){
+                    pixels += '0';
+                }
+                else pixels += '1';
+            }
+            //pixels.push(row);
+        }
+
+        // Call the callback function with the pixel data
+        callback(pixels);
+    };
+
+    img.onerror = function() {
+        console.error('Failed to load image.');
+    };
+}
+
+var ret  = '';
+
+ function autoCaptcha(){
+    console.log("auto captcha");
+    var base64 = '';
+    if(document.querySelector('form img')){
+        base64 = document.querySelector('form img').src;
+        if (base64 != ''){
+            const x = 3;
+
+            for(var i = 0;i<6;i++){
+                cropBase64Image(base64, i*9, 3, 8, 13-x, function(data){
+                    base64ToBitmap(data, function(bm){
+                        console.log(i, ' : ',bm);
+                        DetectImage(bm, function(c){
+                            ret+= c;
+                            console.log(ret);
+                            if(ret.length == 6){
+                                var ele = document.querySelector('input[type=text]');
+                                ele.value = ret;
+                                ele.dispatchEvent(new Event('input'));
+
+                                 requestAnimationFrame(function(){document.querySelector('input[type=submit]').click();});
+                            }
+                        });
+
+                    });
+                });
+            }
+
+		}
+    }
+}
