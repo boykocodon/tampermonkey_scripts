@@ -16,12 +16,9 @@
     setInterval(()=>{
         console.log('bybitcoinsweeper');
         createLogs();
+        writeLogs("WORKING");
         let mines = getBombs();
         if(mines.length == 0) return;
-        let clickButton = document.getElementById('clickButton');
-        if(clickButton){
-            clickButton.innerHTML = mines;
-        }
         console.log(mines);
         timBomTheoSo1(mines, 1);
         timBomTheoSo1(mines, 2);
@@ -60,7 +57,7 @@ function getBombs(){
                 }else{
                     c = imgAlt.replace('Coin','').trim();
                 }
-                if((i-1)%6 ==0){
+                if((i-start)%6 ==0){
                     arr = [];
                 }
                 arr.push(c);
@@ -199,12 +196,20 @@ function createLogs() {
         clickButton.style.zIndex = '1000';
         clickButton.style.padding = '10px 20px';
         clickButton.style.color = 'white';
+        clickButton.style.backgroundColor ='black';
         clickButton.style.border = 'none';
         clickButton.style.borderRadius = '5px';
         clickButton.style.cursor = 'pointer';
         clickButton.style.margin = '5px';
 
         document.body.appendChild(clickButton);
+    }
+}
+
+function writeLogs(str){
+    let clickButton = document.getElementById('logsDiv');
+    if (!clickButton) {
+        clickButton.innerHTML = str;
     }
 }
 
