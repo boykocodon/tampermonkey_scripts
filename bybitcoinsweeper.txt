@@ -178,8 +178,8 @@ function moRong(x,y){
             if(targetNode.childNodes[i].childNodes){
                  if((i-start)%6 == y && phan_nguyen(i-start,6) == x){
                     let imgNode = targetNode.childNodes[i].childNodes[0];
-                     triggerMouseEvent(imgNode.parentNode);
-                    //imgNode.parentNode.click();
+
+                    imgNode.parentNode.click();
                     imgNode.src="data:image/svg+xml,%3csvg%20width='33'%20height='33'%20viewBox='0%200%2033%2033'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='16.5'%20cy='16.5'%20r='14.0193'%20fill='%23FFCE3B'%20stroke='url(%23paint0_linear_151_804)'%20stroke-width='3.96136'/%3e%3ccircle%20cx='16.5'%20cy='16.5'%20r='12'%20fill='%23FFCE3B'/%3e%3ccircle%20cx='16.5'%20cy='16.5'%20r='11.5'%20stroke='url(%23paint1_linear_151_804)'%20stroke-opacity='0.5'/%3e%3cpath%20d='M19.94%2012.4547C19.863%2011.7521%2019.5454%2011.2078%2018.9872%2010.8219C18.429%2010.431%2017.7265%2010.2355%2016.8796%2010.2355C16.2733%2010.2355%2015.7488%2010.3345%2015.3061%2010.5324C14.8634%2010.7254%2014.5193%2010.9926%2014.2739%2011.334C14.0333%2011.6704%2013.913%2012.0539%2013.913%2012.4844C13.913%2012.8456%2013.9948%2013.1573%2014.1585%2013.4195C14.3269%2013.6818%2014.5458%2013.902%2014.8153%2014.0801C15.0896%2014.2533%2015.3831%2014.3992%2015.6959%2014.518C16.0086%2014.6318%2016.3094%2014.7258%2016.5981%2014.8L18.0417%2015.1859C18.5132%2015.3047%2018.9968%2015.4655%2019.4924%2015.6684C19.9881%2015.8712%2020.4476%2016.1384%2020.8711%2016.4699C21.2945%2016.8014%2021.6361%2017.2121%2021.896%2017.702C22.1606%2018.1918%2022.293%2018.7781%2022.293%2019.4609C22.293%2020.3219%2022.0764%2021.0863%2021.6434%2021.7543C21.2151%2022.4223%2020.592%2022.9492%2019.7739%2023.3352C18.9607%2023.7211%2017.9767%2023.9141%2016.8218%2023.9141C15.7151%2023.9141%2014.7575%2023.7335%2013.9491%2023.3723C13.1407%2023.0111%2012.508%2022.499%2012.0508%2021.8359C11.5937%2021.168%2011.3411%2020.3763%2011.293%2019.4609L13.5305%2019.4609C13.5738%2020.0102%2013.747%2020.4678%2014.0502%2020.834C14.3581%2021.1952%2014.7503%2021.4648%2015.2267%2021.643C15.7079%2021.8161%2016.2348%2021.9027%2016.8074%2021.9027C17.4378%2021.9027%2017.9983%2021.8013%2018.4892%2021.5984C18.9848%2021.3906%2019.3746%2021.1036%2019.6585%2020.7375C19.9424%2020.3664%2020.0843%2019.9335%2020.0843%2019.4387C20.0843%2018.9884%2019.9592%2018.6198%2019.709%2018.3328C19.4636%2018.0458%2019.1291%2017.8083%2018.7057%2017.6203C18.2871%2017.4323%2017.8131%2017.2665%2017.2838%2017.123L15.5371%2016.6332C14.3533%2016.3017%2013.415%2015.8143%2012.7221%2015.1711C12.034%2014.5279%2011.69%2013.6768%2011.69%2012.618C11.69%2011.7422%2011.9209%2010.9777%2012.3829%2010.3246C12.8448%209.67148%2013.4704%209.16432%2014.2595%208.80313C15.0487%208.43698%2015.9389%208.25391%2016.9301%208.25391C17.931%208.25391%2018.814%208.43451%2019.5791%208.7957C20.349%209.1569%2020.9553%209.65417%2021.398%2010.2875C21.8407%2010.9159%2022.0716%2011.6383%2022.0909%2012.4547L19.94%2012.4547Z'%20fill='%23E48F0E'/%3e%3cg%20filter='url(%23filter0_f_151_804)'%3e%3cpath%20d='M5.8934%2027.1066C3.08035%2024.2936%201.5%2020.4782%201.5%2016.5C1.5%2012.5218%203.08035%208.70644%205.8934%205.8934C8.70644%203.08035%2012.5218%201.5%2016.5%201.5C20.4782%201.5%2024.2936%203.08035%2027.1066%205.89339L16.5%2016.5L5.8934%2027.1066Z'%20fill='url(%23paint2_linear_151_804)'%20fill-opacity='0.3'/%3e%3c/g%3e%3cdefs%3e%3cfilter%20id='filter0_f_151_804'%20x='0.866183'%20y='0.866183'%20width='26.8751'%20height='26.8741'%20filterUnits='userSpaceOnUse'%20color-interpolation-filters='sRGB'%3e%3cfeFlood%20flood-opacity='0'%20result='BackgroundImageFix'/%3e%3cfeBlend%20mode='normal'%20in='SourceGraphic'%20in2='BackgroundImageFix'%20result='shape'/%3e%3cfeGaussianBlur%20stdDeviation='0.316908'%20result='effect1_foregroundBlur_151_804'/%3e%3c/filter%3e%3clinearGradient%20id='paint0_linear_151_804'%20x1='29.5446'%20y1='6.48916'%20x2='1.28027'%20y2='21.0048'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23FFDC5E'/%3e%3cstop%20offset='0.417119'%20stop-color='%23FFE797'/%3e%3cstop%20offset='1'%20stop-color='%23FFD77B'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint1_linear_151_804'%20x1='25'%20y1='25.5'%20x2='14.3256'%20y2='5.43308'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23DB9224'/%3e%3cstop%20offset='1'%20stop-color='%23DB9224'%20stop-opacity='0'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint2_linear_151_804'%20x1='21.5781'%20y1='5.27402'%20x2='23.1737'%20y2='33.6558'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='white'/%3e%3cstop%20offset='0.105858'%20stop-color='white'/%3e%3cstop%20offset='0.21696'%20stop-color='white'%20stop-opacity='0.961194'/%3e%3cstop%20offset='1'%20stop-color='white'%20stop-opacity='0'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e";
                 }
             }
@@ -211,47 +211,3 @@ function createLogs() {
 function phan_nguyen(a,b){
     return (a - (a % b))/b;
 }
-
-
-function triggerMouseEvent (button) {
-
-        const rect = button.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const downEvent = new PointerEvent('pointerdown', {
-            bubbles: true,
-            clientX: centerX,
-            clientY: centerY
-        });
-
-        const upEvent = new PointerEvent('pointerup', {
-            bubbles: true,
-            clientX: centerX,
-            clientY: centerY
-        });
-
-        button.dispatchEvent(downEvent);
-         new Promise(resolve => setTimeout(resolve, 1));
-        button.dispatchEvent(upEvent);
-         new Promise(resolve => setTimeout(resolve, 1));
-
-
-}
-
-   function Clickxy(element) {
-        if (!element) return;
-        const rect = element.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-        ['mousedown', 'mouseup', 'click'].forEach(eventType => {
-            const clickEvent = new MouseEvent(eventType, {
-
-                cancelable: true,
-                clientX: x,
-                clientY: y
-            });
-            element.dispatchEvent(clickEvent);
-        });
-    }
-
