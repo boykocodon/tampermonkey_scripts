@@ -2,12 +2,12 @@
 // @name         bybitcoinsweeper
 // @namespace    https://bybitcoinsweeper.com/Mine
 // @version      2024-08-29
-// @description  bybit coinsweeper
+// @description  try to take over the world!
 // @author       You
 // @match        https://bybitcoinsweeper.com/Mine*
 // @match        https://bybitcoinsweeper.com/?referredBy=1425041668*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
-// @license MIT
+// @grant        unsafeWindow
 // ==/UserScript==
 
 (function() {
@@ -17,7 +17,6 @@
     setInterval(()=>{
         console.log('bybitcoinsweeper');
         createLogs();
-        writeLogs("WORKING");
         let mines = getBombs();
         if(mines.length == 0) return;
         console.log(mines);
@@ -32,6 +31,7 @@
          morongNeuDuBom(mines, 3);
          morongNeuDuBom(mines, 4);
          morongNeuDuBom(mines, 5);
+        writeLogs('B:'+totalBombs(mines));
     },1000);
 
 
@@ -186,6 +186,17 @@ function moRong(x,y){
 
 }
 
+function totalBombs(mines){
+    let totalBomb = 0;
+    for(let i = 0; i< 9;i++){
+        for(let j=0;j<6;j++){
+            if(mines[i][j] == 'B'){
+                totalBomb++;
+            }
+        }
+    }
+    return 9-totalBomb;
+}
 function createLogs() {
     let clickButton = document.getElementById('logsDiv');
     if (!clickButton) {
@@ -202,6 +213,7 @@ function createLogs() {
         clickButton.style.borderRadius = '5px';
         clickButton.style.cursor = 'pointer';
         clickButton.style.margin = '5px';
+        clickButton.style.fontSize = '16px';
 
         document.body.appendChild(clickButton);
     }
@@ -209,7 +221,7 @@ function createLogs() {
 
 function writeLogs(str){
     let clickButton = document.getElementById('logsDiv');
-    if (!clickButton) {
+    if (clickButton) {
         clickButton.innerHTML = str;
     }
 }
