@@ -4,7 +4,7 @@
 // @version      2024-08-28
 // @description  try to take over the world!
 // @author       You
-// @match        https://my.dropz.xyz/member/check-point*
+// @match        https://raketayo.dropz.xyz/member/check**
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
@@ -30,7 +30,7 @@
 })();
 var idCaptcha = '';
 var profile = 'PROFILE';
- 
+
 
 function getCaptchaId(){
     if(clickSolved){
@@ -44,7 +44,7 @@ function getCaptchaId(){
 			 if(profile !== '')
 				 GM_xmlhttpRequest({
 					 method: "GET",
-					 
+
 					 url:'http://localhost:8090/Captcha?profile=' + profile,
 					 headers: {
 						 "Content-Type": "application/json"
@@ -109,7 +109,7 @@ function solveCaptcha(){
             clickSolved = true;
 			clickSolveTime++;
             //document.querySelector("button[class='btn btn-block btn-danger text-light auth-form-btn']").click();
-			clickButton("button[class='btn btn-block btn-danger text-light auth-form-btn']");
+			clickButton("button[class='btn btn-block btn-round btn-danger text-light auth-form-btn']");
         }
     }
 }

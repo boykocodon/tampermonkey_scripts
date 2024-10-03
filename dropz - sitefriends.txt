@@ -4,7 +4,7 @@
 // @version      2024-08-28
 // @description  try to take over the world!
 // @author       You
-// @match        https://my.dropz.xyz/member/task/sitefrien*
+// @match        https://raketayo.dropz.xyz/member/task/surf-websi*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // ==/UserScript==
 
@@ -12,34 +12,31 @@
     'use strict';
 
     // Your code here...
+
     setInterval(()=>{
      auto();
     },5000);
 
 })();
 
+
 function auto(){
     console.log("auto");
-    var targetNode = document.querySelector("button[class='btn btn-info btn-sm mt-3 mb-4']");
-    if (targetNode) {
-        console.log(targetNode.innerText);
+    let popup = document.querySelector("div[class='swal2-popup swal2-modal swal2-show']");
+    if(!popup){
 
-        if(targetNode.innerText.trim() === 'Visit Website'){
-            console.log('click');
-             clickButton(targetNode);
+        let butn = document.querySelector('button[id="butn"]');
+        if(butn) document.querySelector('button[id="butn"]').click();
+    }else{
+        let content = popup.innerHTML;
+        if(content.indexOf('Do not Close the Opened Window') ==-1){
+            let butn = document.querySelector('button[id="butn"]');
+            if(butn) document.querySelector('button[id="butn"]').click();
         }
+        //let btOk = document.querySelector("button[class='swal2-confirm swal2-styled']");
+        //if(btOk)
+           // document.querySelector("button[class='swal2-confirm swal2-styled']").click();
     }
-    else{
-        console.log ("*** Target node not found!");
-    }
-    var p2 = document.querySelector("p[class='mt-2 card-text']");
-    if(p2){
-        p2.scrollIntoView();
-    }
+
 }
 
-function clickButton(targetNode){
-   
-    targetNode.click();
-   
-}
