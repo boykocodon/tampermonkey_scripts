@@ -17,11 +17,6 @@ namespace WebApplication2.Controllers
         [HttpGet(Name = "SendTask")]
         public async Task<int> SendTask(string profile)
         {
-            var existTask = _dbContext.CaptchaTasks.FirstOrDefault(p => p.Profile == profile && !p.IsCompleted);
-            if (existTask != null)
-            {
-                return existTask.Id;
-            }
             CaptchaTask captchaTask = new CaptchaTask();
             captchaTask.Profile = profile;
             captchaTask.CreatedDate = DateTime.Now;
