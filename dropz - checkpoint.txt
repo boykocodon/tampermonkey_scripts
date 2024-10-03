@@ -4,7 +4,7 @@
 // @version      2024-08-28
 // @description  try to take over the world!
 // @author       You
-// @match        https://raketayo.dropz.xyz/member/check**
+// @match        https://raketayo.dropz.xyz/member/check*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
@@ -121,10 +121,5 @@ function clickButton(xpath){
     else{
 
     }
-}
-
-function triggerMouseEvent (node, eventType) {
-        var clickEvent = new Event(eventType, { bubbles: true, cancelable: true });
-        node.dispatchEvent (clickEvent);
 }
 
