@@ -29,7 +29,6 @@
 
 })();
 var idCaptcha = '';
-var profile = 'PROFILE';
 
 
 function getCaptchaId(){
@@ -41,11 +40,11 @@ function getCaptchaId(){
         console.log('get captcha Id');
          if(idCaptcha === ''){
              console.log('send captcha id');
-			 if(profile !== '')
+			 
 				 GM_xmlhttpRequest({
 					 method: "GET",
 
-					 url:'http://localhost:8090/Captcha?profile=' + profile,
+					 url:'http://localhost:8090/Captcha?profile=abc',
 					 headers: {
 						 "Content-Type": "application/json"
 					 },
