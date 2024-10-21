@@ -18,7 +18,7 @@
     },5000);
 
 })();
-
+var cd =0;
 
 function auto(){
     console.log("auto");
@@ -33,10 +33,15 @@ function auto(){
             let butn = document.querySelector('button[id="butn"]');
             if(butn) document.querySelector('button[id="butn"]').click();
         }
+        if(content.indexOf('Wait for atleast 10 seconds for the next visit') >-1){
+           cd++;
+            if(cd>4){
+                window.location.reload();
+            }
+        }
         //let btOk = document.querySelector("button[class='swal2-confirm swal2-styled']");
         //if(btOk)
            // document.querySelector("button[class='swal2-confirm swal2-styled']").click();
     }
 
 }
-
