@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         check if enough money
+// @name         auto redirect from survey
 // @namespace    http://tampermonkey.net/
 // @version      2024-08-28
 // @description  try to take over the world!
 // @author       You
-// @match        https://raketayo.dropz.xyz/member/task/surf-websi*
+// @match        https://raketayo.dropz.xyz/member/task/survey/li*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // ==/UserScript==
 
@@ -18,18 +18,13 @@
     },10000);
 
 })();
-var isDo = false;
+var cd =0;
 var myInterval;
+var isDo = false;
 function auto(){
-    console.log("auto");
     if(isDo) return;
     isDo = true;
-    let currentXRP = document.querySelector('.card-title').innerText;
-    let dBalance = parseFloat(currentXRP);
-
-    if(dBalance >0.001){
-		clearInterval(myInterval);
-        window.location.href = 'https://raketayo.dropz.xyz/member/withdraw';
-    }
-
+    console.log("auto");
+	clearInterval(myInterval);
+    window.location.href = 'https://raketayo.dropz.xyz/member/task/surf-website';
 }

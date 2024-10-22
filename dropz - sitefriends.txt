@@ -13,13 +13,13 @@
 
     // Your code here...
 
-    setInterval(()=>{
+    myInterval = setInterval(()=>{
      auto();
     },5000);
 
 })();
 var cd =0;
-
+var myInterval;
 function auto(){
     console.log("auto");
     let popup = document.querySelector("div[class='swal2-popup swal2-modal swal2-show']");
@@ -30,16 +30,19 @@ function auto(){
     }else{
         let content = popup.innerHTML;
         if(content.indexOf('Do not Close the Opened Window') ==-1){
-            let butn = document.querySelector('button[id="butn"]');
-            if(butn) document.querySelector('button[id="butn"]').click();
-        }
-        if(content.indexOf('Wait for atleast 10 seconds for the next visit') >-1){
-           cd++;
-            if(cd>4){
-                window.location.reload();
+            if(content.indexOf('Wait for atleast 10 seconds for the next visit') >-1){
+            }else{
+                let butn = document.querySelector('button[id="butn"]');
+                if(butn) document.querySelector('button[id="butn"]').click();
             }
         }
-		popup.style.opacity = 0;
+        if(content.indexOf('Wait for atleast 10 seconds for the next visit') >-1){
+          clearInterval(myInterval);
+            window.location.href = 'https://raketayo.dropz.xyz/member/task/survey/list';
+			
+            
+        }
+		popup.style.opacity = 0.2;
         //let btOk = document.querySelector("button[class='swal2-confirm swal2-styled']");
         //if(btOk)
            // document.querySelector("button[class='swal2-confirm swal2-styled']").click();

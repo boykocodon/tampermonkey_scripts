@@ -13,13 +13,13 @@
 
     // Your code here...
 
-    setInterval(()=>{
+    myInterval = setInterval(()=>{
      auto();
     },10000);
 
 })();
-var cd =0;
 var isDo = false;
+var myInterval;
 function auto(){
     if(isDo) return;
     isDo = true;
@@ -31,6 +31,7 @@ let dBalance = parseFloat(currentXRP);
     if(dBalance >0.001){
        if(btn){
            btn.click();
+		   clearInterval(myInterval);
            setTimeout(function(){
                window.location.href = 'https://raketayo.dropz.xyz/member/task/surf-website';
            },5000);
