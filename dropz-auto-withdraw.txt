@@ -1,0 +1,34 @@
+// ==UserScript==
+// @name         check if enough money
+// @namespace    http://tampermonkey.net/
+// @version      2024-08-28
+// @description  try to take over the world!
+// @author       You
+// @match        https://raketayo.dropz.xyz/member/task/surf-websi*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// ==/UserScript==
+
+( function() {
+    'use strict';
+
+    // Your code here...
+
+    setInterval(()=>{
+     auto();
+    },10000);
+
+})();
+var cd =0;
+var isDo = false;
+function auto(){
+    console.log("auto");
+    if(isDo) return;
+    isDo = true;
+    let currentXRP = document.querySelector('.card-title').innerText;
+    let dBalance = parseFloat(currentXRP);
+
+    if(dBalance >0.001){
+        window.location.href = 'https://raketayo.dropz.xyz/member/withdraw';
+    }
+
+}

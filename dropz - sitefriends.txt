@@ -39,6 +39,7 @@ function auto(){
                 window.location.reload();
             }
         }
+		popup.style.opacity = 0;
         //let btOk = document.querySelector("button[class='swal2-confirm swal2-styled']");
         //if(btOk)
            // document.querySelector("button[class='swal2-confirm swal2-styled']").click();
